@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<blueprint
+	xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+	xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.0.0"
+	xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+	xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.osgi.org/xmlns/blueprint/v1.0.0
+		http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+		http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0
+		http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0/blueprint-cm-1.0.0.xsd">
+
+  <reference id="QBEConsumerService"
+    interface="com.eurodyn.qlack2.test.qbe.consumer.api.QBEConsumerService" />
+
+	<bean id="QBEConsumerRest"
+		class="com.eurodyn.qlack2.test.qbe.consumer.web.QBEConsumerRest">
+		<property name="qbeConsumerService" ref="QBEConsumerService" />
+	</bean>
+
+	<!-- CXF CONFIGURATION -->
+	<bean id="jacksonMapper" class="com.eurodyn.qlack2.test.qbe.consumer.web.util.RESTObjectMapper">
+	</bean>
+	<jaxrs:server id="QBEConsumerServer" address="/">
+		<jaxrs:serviceBeans>
+			<ref component-id="QBEConsumerRest" />
+		</jaxrs:serviceBeans>
+
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+				<property name="mapper" ref="jacksonMapper" />
+			</bean>
+		</jaxrs:providers>
+	</jaxrs:server>
+
+</blueprint>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0"
+	name="QLACK-QBE-Consumer">
+  <feature description="Qlack - Webdesktop" name="qlack-qbe-consumer" version="${project.version}">
+		<feature version="${cxf.version}">cxf</feature>
+		<feature>eventadmin</feature>
+    <bundle>mvn:javax.ws.rs/jsr311-api/${javax.ws.rs.version}</bundle>
+    <bundle>mvn:org.codehaus.jackson/jackson-core-asl/${jackson.version}</bundle>
+    <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/${jackson.version}</bundle>
+    <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/${jackson.version}</bundle>
+    <bundle start-level="100">mvn:com.eurodyn.qlack2.test/qbe-consumer-api/${project.version}</bundle>
+    <bundle start-level="100">mvn:com.eurodyn.qlack2.test/qbe-consumer-impl/${project.version}</bundle>
+    <bundle start-level="100">mvn:com.eurodyn.qlack2.test/qbe-consumer-web/${project.version}</bundle>
+	</feature>
+</features>
